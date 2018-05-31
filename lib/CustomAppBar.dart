@@ -157,7 +157,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       switch (defaultTargetPlatform) {
         case TargetPlatform.android:
         case TargetPlatform.fuchsia:
-           title = new Semantics(namesRoute: true, child: title);
+           title = new Semantics(child: title);
            break;
         case TargetPlatform.iOS:
           break;
