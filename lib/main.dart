@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/rendering.dart';
 import 'dart:ui';
 import 'dart:async';
 import 'CustomIcons.dart';
@@ -158,16 +157,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     });
   }
 
-  void toast(ScaffoldState state, String text) {
+  void toast(BuildContext context, String text) {
     debugPrint(text);
-    state.showSnackBar(new SnackBar(
-      content: new Text(text),
-    ));
+    Scaffold.of(context).showSnackBar(new SnackBar(
+          content: new Text(text),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    final key = new GlobalKey<ScaffoldState>();
     final double _width = MediaQuery.of(context).size.width;
     final double _ratioW = _width / 375.0;
 
@@ -177,28 +175,28 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return new Container(
       decoration: new BoxDecoration(color: backgroundColor),
       child: new Scaffold(
-          key: key,
           backgroundColor: Colors.transparent,
           appBar: new AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             title: new Text(mTitle),
-            leading: new IconButton(
-              icon: new Icon(CustomIcons.menu),
-              onPressed: () {
-                toast(key.currentState, "menu clicked");
-              },
-            ),
-            actions: <Widget>[
-              new IconButton(
-                icon: new Icon(
-                  CustomIcons.search,
-                  size: 26.0,
-                ),
+            leading: new Builder(builder: (BuildContext context) {
+              return new IconButton(
+                icon: new Icon(CustomIcons.menu, size: 26.0),
                 onPressed: () {
-                  toast(key.currentState, "search clicked");
+                  toast(context, "menu clicked");
                 },
-              )
+              );
+            }),
+            actions: [
+              new Builder(builder: (BuildContext context) {
+                return new IconButton(
+                  icon: new Icon(CustomIcons.search, size: 26.0),
+                  onPressed: () {
+                    toast(context, "search clicked");
+                  },
+                );
+              })
             ],
           ),
           body: new Container(
