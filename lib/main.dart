@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Todo'),
+      home: new MyHomePage(title: 'Swifty Todo'),
     );
   }
 }
@@ -99,10 +99,15 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState(title);
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  _MyHomePageState(String title) {
+    mTitle = title;
+  }
+
+  String mTitle;
   ScrollController scrollController;
   Color backgroundColor;
   Tween<Color> colorTween;
@@ -153,8 +158,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     });
   }
 
+  void toast(ScaffoldState state, String text) {
+    debugPrint(text);
+    state.showSnackBar(new SnackBar(
+      content: new Text(text),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final key = new GlobalKey<ScaffoldState>();
     final double _width = MediaQuery.of(context).size.width;
     final double _ratioW = _width / 375.0;
 
@@ -164,14 +177,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return new Container(
       decoration: new BoxDecoration(color: backgroundColor),
       child: new Scaffold(
+          key: key,
           backgroundColor: Colors.transparent,
           appBar: new AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-            title: new Text("TODO"),
+            title: new Text(mTitle),
             leading: new IconButton(
               icon: new Icon(CustomIcons.menu),
-              onPressed: () {},
+              onPressed: () {
+                toast(key.currentState, "menu clicked");
+              },
             ),
             actions: <Widget>[
               new IconButton(
@@ -179,7 +195,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   CustomIcons.search,
                   size: 26.0,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  toast(key.currentState, "search clicked");
+                },
               )
             ],
           ),
