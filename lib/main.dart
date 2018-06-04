@@ -122,9 +122,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     scrollController.addListener(() {
       ScrollPosition position = scrollController.position;
       ScrollDirection direction = position.userScrollDirection;
-      int page = (position.pixels /
-              (position.maxScrollExtent / (todos.length.toDouble() - 1)))
-          .toInt();
+      int page = position.pixels ~/
+              (position.maxScrollExtent / (todos.length.toDouble() - 1));
       double pageDo = (position.pixels /
           (position.maxScrollExtent / (todos.length.toDouble() - 1)));
       double percent = pageDo - page;
