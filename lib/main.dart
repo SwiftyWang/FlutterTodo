@@ -9,8 +9,11 @@ import 'package:flutter/foundation.dart';
 import 'CustomCheckboxTile.dart';
 import 'package:intl/intl.dart';
 import 'CustomAppBar.dart';
+import 'dart:developer';
 
 void main() => runApp(new MyApp());
+
+const ANIMATION_DURATION = 500;
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -123,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       ScrollPosition position = scrollController.position;
       ScrollDirection direction = position.userScrollDirection;
       int page = position.pixels ~/
-              (position.maxScrollExtent / (todos.length.toDouble() - 1));
+          (position.maxScrollExtent / (todos.length.toDouble() - 1));
       double pageDo = (position.pixels /
           (position.maxScrollExtent / (todos.length.toDouble() - 1)));
       double percent = pageDo - page;
@@ -212,23 +215,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             new Padding(
-                              padding: const EdgeInsets.only(bottom: 25.0),
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                  boxShadow: [
-                                    new BoxShadow(
-                                        color: Colors.black38,
-                                        offset: new Offset(5.0, 5.0),
-                                        blurRadius: 15.0)
-                                  ],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: new CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            new Padding(
                               padding: const EdgeInsets.only(bottom: 10.0),
                               child: new Text(
                                 "Hello, Swifty.",
@@ -296,7 +282,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                               );
                                             },
                                             transitionDuration: const Duration(
-                                                milliseconds: 1000)));
+                                                milliseconds:
+                                                    ANIMATION_DURATION)));
                                   },
                                   child: new Container(
                                       decoration: new BoxDecoration(
@@ -546,7 +533,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   void initState() {
     scaleAnimation = new AnimationController(
         vsync: this,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: ANIMATION_DURATION),
         lowerBound: 0.0,
         upperBound: 1.0);
 
